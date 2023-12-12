@@ -1,7 +1,8 @@
-from django.shortcuts import redirect,render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from myApp.models import *
 
@@ -120,6 +121,7 @@ def add_job(request):
     return render(request, 'Recruiter/add_job.html')
 
 
+@login_required
 def deleteJob(request,myid):
     
     job=Job_Model.objects.filter(id=myid).delete()
@@ -128,6 +130,7 @@ def deleteJob(request,myid):
 
 
 
+@login_required
 def editJobPage(request,myid):
     
     job=Job_Model.objects.filter(id=myid)
@@ -140,6 +143,7 @@ def editJobPage(request,myid):
 
 
 
+@login_required
 def updateJob(request):
     if request.method == 'POST':
         job_id = request.POST.get('job_id')
@@ -167,7 +171,8 @@ def updateJob(request):
         new_job.save()
 
         return redirect('viewjobPage')
-    
+  
+@login_required  
 def ApplyList(request,myid):
     
     
@@ -175,9 +180,31 @@ def ApplyList(request,myid):
 
 
 
+@login_required
 def apply_for_job(request, jobid):
     
-    job = Job_Model.objects.filter(id=jobid)
+    
+    job = get_object_or_404(Job_Model, id=jobid)
+    
+    if request.method == 'POST':
+        skills = request.POST.get('skills')
+        resume = request.FILES.get('resume')
+        
+        
+        if skills and resume:
+            applicant = request.user
+
+            application = ApplyModel.objects.create(
+                job=job,
+                applicant=applicant,
+                skills=skills,
+                resume=resume
+            )
+            application.save()
+            messages.success(request, 'Application submitted successfully!')
+        else:
+            messages.error(request, 'Error in the application form. Please check the fields.')
+
     
     context={
         'job':job

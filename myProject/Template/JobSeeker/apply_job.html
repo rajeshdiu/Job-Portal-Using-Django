@@ -3,9 +3,7 @@
 
 {% block content %}
   <div class="apply-job-container">
-    {% for i in job %}
-    <h2>Apply for Job - {{ i.job_title }}</h2>
-    {% endfor %}
+  
 
     <form method="post" action="" enctype="multipart/form-data">
       {% csrf_token %}
