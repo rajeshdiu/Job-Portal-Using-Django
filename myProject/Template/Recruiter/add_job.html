@@ -1,0 +1,22 @@
+<!-- add_job.html -->
+
+{% extends "Recruiter/dashboard.html" %}
+
+{% block content %}
+  <form method="POST" action="{% url 'add_job' %}" class="job-form">
+    {% csrf_token %}
+    <label for="job_title">Job Title:</label>
+    <input type="text" name="job_title" required>
+
+    <label for="company">Company:</label>
+    <input type="text" name="company" required>
+
+    <label for="location">Location:</label>
+    <input type="text" name="location" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" rows="4" required></textarea>
+
+    <button type="submit">Create Job</button>
+  </form>
+{% endblock %}

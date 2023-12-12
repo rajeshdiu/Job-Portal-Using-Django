@@ -1,0 +1,22 @@
+{% extends "JobSeeker/dashboard.html" %}
+
+
+{% block content %}
+  <div class="apply-job-container">
+    {% for i in job %}
+    <h2>Apply for Job - {{ i.job_title }}</h2>
+    {% endfor %}
+
+    <form method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <label for="skills">Skills:</label>
+      <input type="text" id="skills" name="skills" required>
+      
+      <label for="resume">Resume:</label>
+      <input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx" required>
+
+      <button type="submit">Apply Now</button>
+    </form>
+  </div>
+{% endblock %}

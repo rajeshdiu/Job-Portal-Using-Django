@@ -1,0 +1,15 @@
+{% block content %}
+
+
+<nav>
+    <a href="#home">Home</a>
+    {% if user.user_type == 'recruiter' %}
+    <a href="{% url 'add_job' %}">Add Job</a>
+    {% endif %}
+
+    <a href="{% url 'viewjobPage' %}">View Job</a>
+    <a href="#profile">Profile</a>
+    <a href="{% url 'logoutPage' %}">Logout</a>
+</nav>
+
+{% endblock %}

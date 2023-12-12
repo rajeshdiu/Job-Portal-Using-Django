@@ -1,0 +1,27 @@
+<!-- edit_job.html -->
+
+{% extends "Recruiter/dashboard.html" %}
+
+{% block content %}
+  <form method="POST" action="{% url 'updateJob' %}" class="job-form">
+    {% csrf_token %}
+    {% for i in job %}
+    <label for="job_title">Job ID:</label>
+    <input type="text" value="{{i.id}}" name="job_id" required>
+    <label for="job_title">Job Title:</label>
+    <input type="text" value="{{i.job_title}}" name="job_title" required>
+
+    <label for="company">Company:</label>
+    <input type="text" value="{{i.company}}" name="company" required>
+
+    <label for="location">Location:</label>
+    <input type="text" value="{{i.location}}" name="location" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" rows="4" required> {{i.description}}  </textarea>
+
+    <button type="submit">Update Job</button>
+
+    {% endfor %}
+  </form>
+{% endblock %}
