@@ -21,7 +21,7 @@ def signupPage(request):
         user.email=mail
         user.user_type=usertype
         user.save()
-        return redirect("signinPage")
+        return redirect("mySigninPage")
 
     return render(request,'signup.html')
 
@@ -29,9 +29,9 @@ def logoutPage(request):
 
     logout(request)
 
-    return redirect('signinPage')
+    return redirect('mySigninPage')
 
-def signinPage(request):
+def mySigninPage(request):
 
     if request.method == "POST":
 
@@ -201,6 +201,7 @@ def apply_for_job(request, jobid):
                 resume=resume
             )
             application.save()
+            return redirect('jobSeekerAppliedJob')
             messages.success(request, 'Application submitted successfully!')
         else:
             messages.error(request, 'Error in the application form. Please check the fields.')
@@ -212,4 +213,71 @@ def apply_for_job(request, jobid):
   
 
     return render(request, 'JobSeeker/apply_job.html',context)
+
+
+def jobApplicationPage(request):
     
+    applicants = ApplyModel.objects.all()
+
+    context = {
+        'applicants': applicants,
+    }
+    
+    return render(request,'Recruiter/jobApplicationPage.html',context)
+
+
+def ApplyList(request, myid):
+    myJob = get_object_or_404(Job_Model, id=myid)
+    applicants = ApplyModel.objects.filter(job=myJob)
+    
+    context = {
+        'job': myJob,
+        'applicants': applicants,
+    }
+
+    return render(request, 'Recruiter/ApplyList.html', context)
+
+
+def jobSeekerAppliedJob(request):
+    
+    job_seeker=request.user
+    
+    applied_job=ApplyModel.objects.filter(applicant=job_seeker)
+    
+    context={
+        'applied_job':applied_job,
+        
+    }
+    
+    
+    return render(request, 'JobSeeker/appliedjob.html', context)
+
+
+    
+def userProfilePage(request):
+    
+
+    current_user = request.user
+
+    if current_user.user_type == 'recruiter':
+        jobs_created = Job_Model.objects.filter(created_by=current_user)
+        
+        context = {
+            'user': current_user,
+            'jobs_created': jobs_created,
+        }
+    elif current_user.user_type == 'jobseeker':
+        applied_jobs = ApplyModel.objects.filter(applicant=current_user)
+        seeker=JobSeekerProfile.objects.all()
+        
+        context = {
+            'user': current_user,
+            'applied_jobs': applied_jobs,
+            'seeker':seeker,
+        }
+    else:
+        # Handle other user types if needed
+        context = {}
+
+    return render(request, 'JobSeeker/profile.html', context)
+

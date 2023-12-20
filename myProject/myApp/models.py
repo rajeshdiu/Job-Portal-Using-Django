@@ -36,3 +36,20 @@ class ApplyModel(models.Model):
 
     def __str__(self):
         return f"{self.applicant.display_name} applied for {self.job.job_title}"
+
+class RecruiterProfile(models.Model):
+    user = models.OneToOneField(Custom_User, on_delete=models.CASCADE)
+    company_info = models.TextField(max_length=128)
+    profile_pic = models.ImageField(upload_to='media/Recruiter/profile_pic')
+
+    def __str__(self):
+        return f"Recruiter Profile for {self.user.username}"
+
+class JobSeekerProfile(models.Model):
+    user = models.OneToOneField(Custom_User, on_delete=models.CASCADE)
+    skills_set = models.TextField(max_length=128)
+    resume = models.FileField(upload_to='resumes/')
+    profile_pic = models.ImageField(upload_to='media/Jobseeker/profile_pic')
+
+    def __str__(self):
+        return f"Job Seeker Profile for {self.user.username}"

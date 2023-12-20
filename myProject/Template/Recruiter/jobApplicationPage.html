@@ -1,0 +1,58 @@
+{% extends "Recruiter/dashboard.html" %}
+
+{% block content %}
+<style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  
+    .applicant-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+  
+    .applicant-table th, .applicant-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+  
+    .applicant-table th {
+      background-color: #4caf50;
+      color: white;
+    }
+  
+    .applicant-table tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+  <div class="container">
+    <h2>All Applicants</h2>
+    <table class="applicant-table">
+      <thead>
+        <tr>
+          <th>Applicant Display Name</th>
+          <th>Skills</th>
+          <th>Job Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for applicant in applicants %}
+          <tr>
+            <td>{{ applicant.applicant.display_name }}</td>
+            <td>{{ applicant.skills }}</td>
+            <td>{{ applicant.job.job_title }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
+
+

@@ -1,0 +1,58 @@
+{% extends "JobSeeker/dashboard.html" %}
+
+{% block content %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .applied-jobs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .applied-jobs-table th, .applied-jobs-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .applied-jobs-table th {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .applied-jobs-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+<div class="container">
+  <h2>Your Applied Jobs</h2>
+  <table class="applied-jobs-table">
+    <thead>
+      <tr>
+        <th>Job Title</th>
+        <th>Company</th>
+        <th>Location</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for applied_job in applied_job %}
+        <tr>
+          <td>{{ applied_job.job.job_title }}</td>
+          <td>{{ applied_job.job.company }}</td>
+          <td>{{ applied_job.job.location }}</td>
+          <td>{{ applied_job.job.description }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

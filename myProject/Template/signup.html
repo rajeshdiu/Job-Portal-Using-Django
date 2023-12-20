@@ -65,7 +65,7 @@
 </head>
 <body>
 
-<form method="POST" action="{% url 'signinPage' %}">
+<form method="POST" action="{% url 'signupPage' %}">
 
     {% csrf_token %}
     <h2>Sign Up</h2>
@@ -91,7 +91,7 @@
     <button type="submit">Sign Up</button>
 
     <div class="sign-in-link">
-        <p>Already have an account? <a href=" {% url 'signinPage' %} ">Sign In</a></p>
+        <p>Already have an account? <a href=" {% url 'mySigninPage' %} ">Sign In</a></p>
     </div>
 </form>
 

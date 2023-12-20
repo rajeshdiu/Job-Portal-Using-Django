@@ -5,10 +5,17 @@
     <a href="#home">Home</a>
     {% if user.user_type == 'recruiter' %}
     <a href="{% url 'add_job' %}">Add Job</a>
+    
+    <a href="{% url 'viewjobPage' %}">View Job</a>
+    <a href="{% url 'jobApplicationPage' %}">Applications</a>
     {% endif %}
 
-    <a href="{% url 'viewjobPage' %}">View Job</a>
-    <a href="#profile">Profile</a>
+    {% if user.user_type == 'jobseeker' %}
+    <a href="{% url 'jobSeekerAppliedJob' %}">Applied Job</a>
+    
+    <a href="{% url 'viewjobPage' %}">Find Job</a>
+    {% endif %}
+    <a href="{% url 'userProfilePage' %}">Profile</a>
     <a href="{% url 'logoutPage' %}">Logout</a>
 </nav>
 

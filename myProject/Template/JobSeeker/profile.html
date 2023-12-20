@@ -1,0 +1,127 @@
+{% extends 'JobSeeker/dashboard.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Profile</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      header {
+        background-color: #3498db;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .profile-info {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px;
+      }
+      
+      .profile-picture img {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .profile-picture input[type="file"] {
+        display: none;
+      }
+
+      .profile-picture label {
+        cursor: pointer;
+        color: #3498db;
+        text-decoration: underline;
+      }
+      
+      .personal-info {
+        max-width: 500px;
+      }
+      
+      .skills {
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+      
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      
+      footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #2c3e50;
+        color: #fff;
+      }
+      
+  </style>
+
+</head>
+<body>
+
+  <header>
+    <h1>{{user.display_name}}</h1>
+  </header>
+
+  <section class="profile-info">
+    <div class="profile-picture">
+      <label for="profile-image">Upload Profile Picture</label>
+      <input type="file" id="profile-image" accept="image/*" onchange="previewImage(event)">
+      <img id="preview" alt="Profile Picture Preview">
+    </div>
+    <div class="personal-info">
+      <h2>About Me</h2>
+      <p>Username : {{user.username}}</p>
+      <p>Usert Type : {{user.user_type}}</p>
+      <h2>Contact Information</h2>
+      <p>Mail : {{user.email}}</p>
+    </div>
+  </section>
+
+  <section class="skills">
+    <h2>Skills</h2>
+    <ul>
+        
+        {% for i in seeker %}
+            
+        
+            
+      <li>{{i.skills_set}}</li>
+
+      {% endfor %}
+    </ul>
+  </section>
+
+  <script>
+    function previewImage(event) {
+      const preview = document.getElementById('preview');
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+{% endblock content %}

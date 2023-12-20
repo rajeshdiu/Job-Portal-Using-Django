@@ -75,7 +75,7 @@
 <body>
   <div class="container">
     <h2>Sign In</h2>
-    <form action="#" method="post">
+    <form action=" {% url 'mySigninPage' %} " method="post">
         {% csrf_token %}
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required>
